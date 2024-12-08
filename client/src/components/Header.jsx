@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import logo from '../assets/logo.png';
+import logo from '../assets/updated_logo.mp4';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -14,24 +14,29 @@ export default function Header() {
   }, [])
 
   return (
-    <header className={`fixed w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'shadow-lg' : ''
-    } bg-white`}>
+    <header className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'shadow-lg' : ''
+      } bg-white`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
           <div className="flex items-center space-x-4">
-            <img 
-              src={logo}
-              alt="Weld and Metal Fabrication Logo" 
-              className="w-16 h-16 hover:scale-110 transition-transform duration-300"
-            />
+          <div className="relative w-16 h-16 overflow-hidden rounded-lg hover:scale-110 transition-transform duration-300">
+  <video
+    src={logo}
+    alt="Video"
+    className="w-full h-full object-cover"
+    autoPlay
+    loop
+    muted
+    playsInline
+  />
+</div>
             <h1 className="text-2xl font-bold tracking-wider text-blue-900 transition-colors duration-300">
-              WELD AND METAL FABRICATION
+              <Link to="/"> WELD AND METAL FABRICATION </Link>
             </h1>
           </div>
-          
+
           <nav className="hidden md:flex items-center space-x-8 text-xl">
-            {['About Us', 'Services','Projects','Featured On' ,'Get Quote','Contact Us'].map((item) => (
+            {['About Us', 'Services', 'Projects', 'Featured On', 'Get Quote', 'Contact Us'].map((item) => (
               <Link
                 key={item}
                 to={`/${item.toLowerCase().replace(' ', '-')}`}

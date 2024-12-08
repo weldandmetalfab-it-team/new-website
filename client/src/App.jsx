@@ -4,6 +4,7 @@ import LandingPage from './pages/LandingPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import ContactPage from './pages/ContactUs';
 
 const AppContent = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const AppContent = () => {
 
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/contact-us" element={<ContactPage />} />
         
       </Routes>
 
