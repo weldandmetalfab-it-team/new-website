@@ -1,10 +1,54 @@
-
-
-import { motion } from 'framer-motion'
-import { useState } from 'react'
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function LandingPage() {
-  const [selectedCapability, setSelectedCapability] = useState('Welding')
+  const [selectedCapability, setSelectedCapability] = useState('Welding');
+  const [openIndex, setOpenIndex] = useState(null);
+  const [currentReview, setCurrentReview] = useState(0);
+  
+  const reviews = [
+    {
+      id: 1,
+      name: "John Smith",
+      role: "Construction Manager",
+      review: "Their metal fabrication work is exceptional. The attention to detail and quality of finish exceeded our expectations.",
+      rating: 5,
+      image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      id: 2,
+      name: "Sarah Johnson",
+      role: "Project Director",
+      review: "Outstanding service! Their team's expertise in welding helped us complete our project ahead of schedule.",
+      rating: 5,
+      image: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      id: 3,
+      name: "Michael Chen",
+      role: "Industrial Designer",
+      review: "The precision in their metal cutting and fabrication is remarkable. Highly recommended for complex projects.",
+      rating: 5,
+      image: "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      id: 4,
+      name: "Emma Davis",
+      role: "Architect",
+      review: "Their innovative approach to metal fabrication helped bring our design vision to life. Exceptional craftsmanship!",
+      rating: 5,
+      image: "https://images.pexels.com/photos/3757004/pexels-photo-3757004.jpeg?auto=compress&cs=tinysrgb&w=600"
+    }
+  ];
+
+  const nextReview = () => {
+    setCurrentReview((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevReview = () => {
+    setCurrentReview((prev) => (prev === 0 ? reviews.length - 1 : prev - 1));
+  };
 
   const capabilities = {
     'Welding': {
@@ -15,7 +59,7 @@ export default function LandingPage() {
     'Metal Leaser Cutting': {
       title: 'Metal Leaser Cutting',
       description: 'Metal laser cutting is an advanced technology that uses a high-powered laser beam to cut through materials with precision and speed. The process involves directing the laser\'s output through a series of optics to achieve clean and intricate cuts, making it ideal for industrial manufacturing and intricate designs. Laser cutting is valued for its ability to produce minimal waste, high accuracy, and smooth finishes, even in complex patterns or dense materials. It is commonly used in industries like aerospace, automotive, and electronics.',
-      image: 'https://images.pexels.com/photos/1216544/pexels-photo-1216544.jpeg?auto=compress&cs=tinysrgb&w=600'
+      image: 'https://glorylaser.com/wp-content/uploads/2024/01/custom-metal-laser-cutting-solution-1.jpg'
     },
     'Metal Cutting CNC': {
       title: 'Metal Cutting CNC',
@@ -37,17 +81,39 @@ export default function LandingPage() {
       description: 'Metal 3D printing, also known as metal additive manufacturing, is a revolutionary process that creates three-dimensional metal parts layer by layer based on digital designs. This technology allows for the production of complex geometries, lightweight structures, and custom components that are difficult or impossible to achieve with traditional manufacturing methods. Metal 3D printing is widely used in industries like aerospace, healthcare, and automotive, where precision and innovation are critical.',
       image: 'https://images.pexels.com/photos/20877036/pexels-photo-20877036/free-photo-of-3d-printer-with-camcorder.jpeg?auto=compress&cs=tinysrgb&w=600'
     }
-  }
+  };
+
+  const faqs = [
+    {
+      question: "Is metal fabrication safe?",
+      answer: "Yes, metal fabrication is safe when proper safety protocols and equipment are used. Professional fabricators follow strict safety guidelines, use protective gear, and maintain well-ventilated workspaces. Regular training and maintenance of equipment ensure both worker and product safety."
+    },
+    {
+      question: "What is the demand for metal fabrication?",
+      answer: "The demand for metal fabrication is consistently high and growing. Industries such as construction, automotive, aerospace, and manufacturing rely heavily on metal fabrication services. The market is expected to continue expanding due to increasing infrastructure development and technological advancements."
+    },
+    {
+      question: "Which metal is most in demand?",
+      answer: "Steel remains the most in-demand metal for fabrication due to its versatility, strength, and cost-effectiveness. Other highly demanded metals include aluminum for its lightweight properties, stainless steel for its corrosion resistance, and copper for its electrical conductivity."
+    },
+    {
+      question: "What is the purpose of fabrication?",
+      answer: "Metal fabrication serves to transform raw metal materials into finished products or components. It involves cutting, bending, welding, and assembling metal parts to create everything from structural components to precise machinery parts. The purpose is to produce durable, custom-made metal products that meet specific industrial or commercial needs."
+    },
+    {
+      question: "What is sheet metal material?",
+      answer: "Sheet metal is metal formed into thin, flat pieces. It's available in various materials including steel, aluminum, brass, and copper, and comes in different thicknesses or gauges. Sheet metal is widely used in manufacturing, construction, and automotive industries for its versatility and strength-to-weight ratio."
+    }
+  ];
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
     transition: { duration: 0.6 }
-  }
+  };
 
   return (
     <div className="min-h-screen">
-      
       <section className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -68,10 +134,10 @@ export default function LandingPage() {
               transition={{ duration: 0.8 }}
             >
               <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              Unlocking the Strength of the Steel
+                Unlocking the Strength of the Steel
               </h1>
               <p className="text-lg text-gray-300 mb-8">
-              Welding Magic on the Quantum Level , Building Tomorrow's Infrastructure Today Where Ideas Take Shape in Metal and Steel Solutions, Crafted with Care. Designing Metal, Designing Quality.Welding Heat. So Neat! Let Us Weld Your Visions Unfold.
+                Welding Magic on the Quantum Level, Building Tomorrow's Infrastructure Today Where Ideas Take Shape in Metal and Steel Solutions, Crafted with Care. Designing Metal, Designing Quality. Welding Heat. So Neat! Let Us Weld Your Visions Unfold.
               </p>
               <motion.button
                 className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition-colors duration-300 flex items-center space-x-2"
@@ -101,7 +167,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-     
       <section className="py-20 bg-gray-100">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12">
@@ -282,7 +347,132 @@ export default function LandingPage() {
           </motion.div>
         </div>
       </section>
+
+      <section className="py-20 bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 text-white">
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-5xl font-bold mb-4">Client Reviews</h2>
+            <p className="text-gray-300 text-lg">
+              What our clients say about our services
+            </p>
+          </motion.div>
+
+          <div className="relative max-w-4xl mx-auto">
+            <button
+              onClick={prevReview}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 bg-blue-600 hover:bg-blue-700 p-2 rounded-full transition-colors duration-300"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentReview}
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{ duration: 0.5 }}
+                className="bg-blue-800/50 rounded-xl p-8"
+              >
+                <div className="flex flex-col items-center">
+                  <img
+                    src={reviews[currentReview].image}
+                    alt={reviews[currentReview].name}
+                    className="w-20 h-20 rounded-full object-cover mb-4 border-2 border-blue-400"
+                  />
+                  <div className="flex mb-4">
+                    {[...Array(reviews[currentReview].rating)].map((_, i) => (
+                      <svg
+                        key={i}
+                        className="w-5 h-5 text-yellow-400"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-xl italic mb-4 text-center">
+                    "{reviews[currentReview].review}"
+                  </p>
+                  <h3 className="text-xl font-bold">{reviews[currentReview].name}</h3>
+                  <p className="text-blue-400">{reviews[currentReview].role}</p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            <button
+              onClick={nextReview}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 bg-blue-600 hover:bg-blue-700 p-2 rounded-full transition-colors duration-300"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-5xl font-bold mb-4 text-blue-800">
+              Frequently Asked Questions
+            </h2>
+          </motion.div>
+
+          <div className="max-w-3xl mx-auto">
+            {faqs.map((faq, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="border-b border-gray-200"
+              >
+                <button
+                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                  className="w-full py-6 text-left flex justify-between items-center hover:text-blue-600 transition-colors duration-300"
+                >
+                  <span className="text-lg font-semibold">{faq.question}</span>
+                  <motion.span
+                    animate={{ rotate: openIndex === index ? 45 : 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-2xl font-thin"
+                  >
+                    +
+                  </motion.span>
+                </button>
+                <AnimatePresence>
+                  {openIndex === index && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <p className="pb-6 text-gray-600">
+                        {faq.answer}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
-  )
+  );
 }
 
