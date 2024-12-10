@@ -7,9 +7,9 @@
 }
 
 :root {
-    --primary-color: #4800ff;
-    --secondary-color: #635f5f;
-    --hover-color: #ff0000;
+    --primary-color: #2230af;
+    --secondary-color: #4658ff;
+    --hover-color: #6a2ba8;
     --font-family: 'Arial', sans-serif;
     --transition-duration: 0.4s;
 }
@@ -19,12 +19,13 @@
     font-family: var(--font-family);
     color: var(--primary-color);
     font-size: 45px;
+    font-weight: 600;
     padding-top: 120px;
 }
 .head-content {
-    color: #635f5f;
-    font-size: 30px;
-    font-style: italic;
+    color:var(--secondary-color);
+    font-size: 24px;
+    
     letter-spacing: 1.5px;
 }
 
@@ -37,7 +38,7 @@
 
 .company-name:hover {
     color:#635f5f;
-    text-decoration: underline;
+    text-decoration: unset;
     cursor: pointer;
     font-style: italic;
 }
@@ -60,12 +61,12 @@
     border:2px solid #ffffff;
     border-radius: 30px;
     padding: 20px;
-    transition: box-shadow var(--transition-duration);
+   /* transition: box-shadow var(--transition-duration);*/
 }
-
+/*
 .about-card:hover {
     box-shadow: 5px 5px 15px rgba(118, 75, 162, 0.4);
-}
+}*/
 
 /* Team section */
 .team {
@@ -84,12 +85,12 @@
     font-family: var(--font-family);
     color: var(--primary-color);
     font-size: 45px;
+    font-weight: 600;
 }
 
 .team-head-content p {
     color: var(--secondary-color);
-    font-size: 30px;
-    font-style: italic;
+    font-size: 24px;
 }
 
 /* Profile cards */
@@ -108,7 +109,7 @@
 
 .profile:hover {
     transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 64, 255, 0.5);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
 .profile img {

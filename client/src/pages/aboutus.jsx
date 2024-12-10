@@ -25,10 +25,10 @@ function TeamCard({ name, bio, img }) {
 
 export default function About() {
     const teamMembers = [
-        { name: 'Mike', bio: '15 years of experience in welding and fabrication.', img: team1 },
-        { name: 'Tom Smith', bio: '10+ years of skilled welding expertise.', img: team2 },
-        { name: 'Mark Smith', bio: 'Passionate about high-quality metalwork.', img: team3 },
-        { name: 'John Doe', bio: 'Experienced in various welding techniques.', img: team4 },
+        { name: 'Mike', bio: 'Mike has been working in the welding and metal fab industry for over 10 years. He is passionate about creating quality metal products and enjoys working with his hands.', img: team1 },
+        { name: 'Michael Smith', bio: 'Michael has been working in the welding and metal fabrication industry for over 10 years. He is skilled in various welding techniques and is known for his attention to detail and precision in his work.', img: team2 },
+        { name: 'Mark Smith', bio: 'Mark Smith is a skilled welder and metal fabricator with over 10 years of experience in the industry. He takes pride in his work and enjoys creating custom metal pieces for various clients.', img: team3 },
+        { name: 'John Doe', bio: 'John Doe has been working in the welding and metal fabrication industry for over a decade. He is passionate about creating quality products and takes pride in his work. In his free time, he enjoys working on personal welding projects and spending time with his family.', img: team4 },
     ];
     
 
@@ -48,7 +48,7 @@ export default function About() {
                             customers to use resources as little as needed and save significantly on their investment. 
                             "Why wander everywhere when WELD & METAL FAB can actually do the job for you?" We acquire materials for you, 
                             resize according to your needs, fabricate and deliver them to your doorstep. Our experienced team of 
-                            professionals utilizes the latest technology and equipment to ensure precise and efficient fabrication services.
+                            professionals utilizes the latest technology and equipment to ensure precise and efficient fabrication services. We excel in prototyping.consultation and complete research analysis of product manuacturing. which minimizes loss of the product. Our target customer is everyone including start-ups, Corporates, industries, school students, fabrication of projects of students and Small scale prototype if required for clients. Whether it's steel, aluminum, or stainless steel, we have the expertise to handle all your fabrication needs with precision and professionalism. We welcome B-to-B too. We also provide you the R&D files regarding the manufacturing process that help you during mass production of the same parts.
                         </p>
                     </div>
                     <img src={image} alt="Fabrication work" className="image img-fluid d-none d-md-block" />
