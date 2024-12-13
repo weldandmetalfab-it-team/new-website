@@ -7,7 +7,14 @@ const customerSchema = new mongoose.Schema({
   billingAddress: { type: String, required: true },
   companyName: { type: String },
   gstinNumber: { type: String },
-  email: { type: String, required: true, unique: true }, // Unique constraint
+  email: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true,
+    match: [/\S+@\S+\.\S+/, 'Invalid email address'],
+  },
+   
   natureOfWork: { type: String, required: true }
 });
 

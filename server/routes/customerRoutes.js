@@ -1,8 +1,10 @@
 import express from 'express';
-import Customer from '../models/customerModel.js'; // Adjust the path to your model if necessary
+import validator from 'validator';
+import Customer from '../models/customerModel.js';
 
-// Initialize the router
 const router = express.Router();
+
+// Create customer route
 router.post('/customer', async (req, res) => {
   try {
     const {
@@ -11,20 +13,34 @@ router.post('/customer', async (req, res) => {
       deliveryAddress,
       billingAddress,
       companyName,
-      gstinNumber, // Optional
+      gstinNumber,
       email,
-      natureOfWork
+      natureOfWork,
     } = req.body;
 
-    // Check for missing required fields
-    if (!name || !whatsappNumber || !deliveryAddress || !billingAddress || !email || !natureOfWork) {
-      return res.status(400).json({ 
-        message: 'Missing required fields', 
-        requiredFields: ['name', 'whatsappNumber', 'deliveryAddress', 'billingAddress', 'email', 'natureOfWork'] 
+    // Check required fields
+    const missingFields = [];
+    ['name', 'whatsappNumber', 'deliveryAddress', 'billingAddress', 'email', 'natureOfWork'].forEach((field) => {
+      if (!req.body[field]) missingFields.push(field);
+    });
+
+    if (missingFields.length > 0) {
+      return res.status(400).json({
+        message: 'Missing required fields',
+        missingFields,
       });
     }
 
-    // Create and save a new customer
+    // Validate email and phone
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({ message: 'Invalid email format', field: 'email' });
+    }
+
+    if (!validator.isMobilePhone(whatsappNumber, 'any')) {
+      return res.status(400).json({ message: 'Invalid WhatsApp number format', field: 'whatsappNumber' });
+    }
+
+    // Create new customer
     const customer = new Customer({
       name,
       whatsappNumber,
@@ -33,7 +49,7 @@ router.post('/customer', async (req, res) => {
       companyName,
       gstinNumber,
       email,
-      natureOfWork
+      natureOfWork,
     });
 
     await customer.save();
@@ -42,15 +58,16 @@ router.post('/customer', async (req, res) => {
   } catch (error) {
     console.error(error);
 
-    // Handle duplicate email error
-    if (error.code === 11000 && error.keyValue.email) {
-      return res.status(400).json({ message: 'Email already exists', field: 'email' });
+    if (error.code === 11000) {
+      return res.status(400).json({
+        message: 'Duplicate value detected',
+        field: Object.keys(error.keyValue)[0],
+        value: error.keyValue[Object.keys(error.keyValue)[0]],
+      });
     }
 
     res.status(500).json({ message: 'Failed to save customer information', error: error.message });
   }
 });
 
-
-// Export the router
 export default router;
