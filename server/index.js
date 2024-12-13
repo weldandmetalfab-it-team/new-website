@@ -3,6 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import contactRoutes from './routes/contactRoutes.js';
 import submissionRoutes from './routes/submissions.js';
+import customerRoutes  from './routes/customerRoutes.js';
 // import phonepeRoute from './routes/phonepeRoute.js';
 
 
@@ -30,6 +31,7 @@ app.use(express.json());
 // Routes
 app.use('/api/contact', contactRoutes);
 app.use("/api", submissionRoutes);
+app.use('/api', customerRoutes);
 // app.use("/api", phonepeRoute);
 
 // Server setup
