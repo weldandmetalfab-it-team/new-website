@@ -1,8 +1,14 @@
-import mega from "mega";
+import { Storage } from "megajs";
 
+/**
+ * Uploads a file to MEGA storage and returns the download URL.
+ * @param {string} filename - Name of the file to upload.
+ * @param {Buffer} buffer - File data as a Node.js Buffer.
+ * @returns {Promise<string>} - Download URL of the uploaded file.
+ */
 export async function uploadToMega(filename, buffer) {
   try {
-    // Validate inputs
+    
     if (!Buffer.isBuffer(buffer)) {
       throw new Error("Invalid buffer: Expected a Node.js Buffer object.");
     }
@@ -12,7 +18,7 @@ export async function uploadToMega(filename, buffer) {
     }
 
     // Initialize MEGA storage
-    const storage = new mega.Storage({
+    const storage = new Storage({
       email: "weldandmetalfab.it.team01@gmail.com",
       password: "weldandmetal01",
     });
@@ -20,36 +26,29 @@ export async function uploadToMega(filename, buffer) {
     // Wait for storage to be ready
     await new Promise((resolve, reject) => {
       storage.on("ready", resolve);
-      storage.on("error", (err) => {
-        console.error("Error connecting to MEGA storage:", err);
-        reject(err);
-      });
+      storage.on("error", reject);
     });
 
     console.log("Connected to MEGA storage.");
 
-    // Start file upload
-    const upload = storage.upload(filename);
-    upload.write(buffer);
-    upload.end();
+    // Upload the file
+    const file = storage.upload(filename, buffer);
 
-    // Wait for the upload to complete
-    const file = await new Promise((resolve, reject) => {
-      upload.on("complete", resolve);
-      upload.on("error", (err) => {
-        console.error("Upload error:", err);
-        reject(err);
-      });
-      upload.on("progress", (bytesLoaded, bytesTotal) => {
-        console.log(`Upload progress: ${bytesLoaded} / ${bytesTotal}`);
-      });
+    // Wait for upload completion
+    await new Promise((resolve, reject) => {
+      file.on("complete", resolve);
+      file.on("error", reject);
     });
 
-    // Return the file link
-    console.log("Upload completed. File details:", file);
-    return file.link;
+    console.log("File uploaded successfully:", filename);
+
+    // Generate a download link
+    const fileUrl = `https://mega.nz/file/${file.nodeId}#${storage.key}`;
+    console.log("Generated file URL:", fileUrl);
+
+    return fileUrl;
   } catch (error) {
-    console.error("MEGA upload failed:", error);
+    console.error("MEGA uploading file failed:", error);
     throw error;
   }
 }
